@@ -1,0 +1,13 @@
+# R (project) files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# data files and event logs
+*.xes
+*.csv
+*.xlsx
+
+# Jupyter files
+.ipynb_checkpoints

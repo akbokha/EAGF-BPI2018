@@ -1,0 +1,61 @@
+Trace Attributes
+
+Attribute	Type	Explanation
+
+program-id	literal	Internal id of the funding program
+concept:name(and application)	literal	Unique case id for the application
+identity:id	UUID	Globally unique case id (UUID)
+Department	literal	Id of the local department
+application	literal	The applicant’s id, the same across years
+year	literal	The current year
+number_parcels*	discrete	The number of parcels
+area	continuous	The total area of all parcels
+basic_payment	boolean	Application for basic payment scheme
+greening	boolean	Application for greening payment
+redistribution	boolean	Application for re-distributive payment
+small farmer	boolean	Application for small farmer scheme
+young farmer	boolean	Application for payment for young farmers
+applicant	literal	Anonimized identifier of applicants
+
+Derived attributes
+
+penalty_{xxx}	boolean	Indicates if a penalty was applied for a certain reason {xxx} (see also the business questions). The following reasons can be found in the log: JLP1, AVGP, C4, JLP3, JLP2, JLP5, JLP6, C9, AVJLP, V5, CC, AVUVP, GP1, B16, BGK, C16, AGP, B3, B2, AVBP, B5, B4, B6, ABP, AUVP, AJLP, BGKV, JLP7, B5F, BGP.
+amount_applied{x}*	continuous	Amount (in Euro) applied for in the application. The number indicates the current payment subprocess, starting with zero. If a case requires changes by the department or due to objection by the applicant, this number is increased by 1 for each payment.
+payment_actual{x}*	continuous	Amount (in Euro) actually received by the applicant. For the meaning of {x}, see above.
+penalty_amount{x}	continuous	Penalty applied by the department, e.g., due to over-declaration of parcel sizes. For the meaning of {x}, see above. Only available if penalty_applied is true.
+risk_factor	continuous	An optional, manually assigned risk assessment factor.
+cross_compliance	continuous	A penalty term due to violation of cross-compliance rules.
+selected_random	boolean	Has the application been selected for an inspection at random?
+selected_risk	boolean	Has the application been selected for an inspection due to risk assessment?
+selected_manually	boolean	Has the application been selected for an inspection manually?
+rejected	boolean	Entire rejection of the application
+
+Event Attributes
+
+Attribute	Type	Explanation
+success	boolean	Indicates whether the event was successful.
+concept:name (and activity)	literal	Activity that was performed of which this event indicates the completion.
+docid	literal	Internal id of the document the event refers to.
+doctype	literal	Type of the document as indicated in the list of document types above.
+eventid	literal	Internal id of an event (may be null in case of an inferred event)
+lifecycle:transition	literal	Value is "complete" for all events. Included for compatibility with some tools that require it.
+note	literal	Free text note included for the event. Defaults to "none" if no note is available
+org:resource	literal	indicates the resource responsible for the event.
+subprocess	literal	Subprocess to which the event belongs. Each document is subdivided in a number of subprocesses
+time:timestamp	timestamp	Time at which the event occurred. Note that ordering of events with identical timestamps cannot be concluded from the file. Also note that some timestamps are manually entered and may therefore contain spelling mistakes.
+docid_uuid	UUID	Globally unique id for the document the event belongs to. There is a 1-to-1 correspondence between docid and docid_uuid.
+identity:id	UUID	Globally unique id of each event. Supersedes the eventid attribute in case that the eventid is not unique (e.g. null). Events have a unique identity:id attribute accross all files.
+
+
+Document type	Sub Process	Explanation
+
+Control summary	Main	A document containing the summarized results of various checks (reference alignment, department control, inspections)
+Department control parcels (before 2017)	Main	A document containing the results of checks regarding the validity of parcels of a single applicant
+Entitlement application	Main Objection Change	The application document for entitlements, i.e., the right to apply for direct payments, usually created once at the beginning of a new funding period
+Inspection	On-Site Remote	A document containing the results of on-site or remote-inspections
+Parcel Document (before 2016)	Main	The document containing all parcels for which subsidies are requested
+Geo Parcel Document (replaces Parcel document since 2016 and Department control parcels since 2017)	Main Declared Reported	The document containing all parcels for which subsidies are requested. From 2017, the Geo Parcel Document also replaces the Department control parcels document.
+Payment application	Main Application Objection Change	The application document for direct payments, usually each year
+Reference alignment	Main	A document containing the results of aligning the parcels as stated by the applicant with known reference parcels (e.g., a cadaster)
+
+van Dongen, B.F. (Boudewijn); Borchert, F. (Florian) (2018) BPI Challenge 2018. Eindhoven University of Technology. Dataset. https://doi.org/10.4121/uuid:3301445f-95e8-4ff0-98a4-901f1f204972
