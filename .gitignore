@@ -11,3 +11,6 @@
 
 # Jupyter files
 .ipynb_checkpoints
+
+# Misc
+*.zip
